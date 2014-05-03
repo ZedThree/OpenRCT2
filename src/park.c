@@ -28,7 +28,7 @@
 
 int park_is_open()
 {
-	return (RCT2_GLOBAL(RCT2_ADDRESS_GAME_FLAGS, uint32) & GAME_FLAGS_PARK_OPEN) != 0;
+	return (RCT2_GLOBAL(RCT2_ADDRESS_PARK_FLAGS, uint32) & PARK_FLAGS_PARK_OPEN) != 0;
 }
 
 /**
@@ -86,7 +86,7 @@ int calculate_park_rating()
 	int result;
 
 	result = 1150;
-	if (RCT2_GLOBAL(RCT2_ADDRESS_GAME_FLAGS, uint32) & 0x4000)
+	if (RCT2_GLOBAL(RCT2_ADDRESS_PARK_FLAGS, uint32) & 0x4000)
 		result = 1050;
 	
 	// Guests
@@ -110,7 +110,7 @@ int calculate_park_rating()
 				continue;
 			if (peep->happiness > 128)
 				num_happy_peeps++;
-			if (!(peep->var_C8 & 0x01))
+			if (!(peep->flags & PEEP_FLAGS_LEAVING_PARK))
 				continue;
 			if (peep->var_C6 <= 89)
 				_bp++;
@@ -157,10 +157,10 @@ int calculate_park_rating()
 
 			if (ride->type == RIDE_TYPE_NULL)
 				continue;
-			if (ride->var_140 == -1)
+			if (ride->excitement == -1)
 				continue;
-			_ax += ride->var_140 / 8;
-			_bx += ride->var_142 / 8;
+			_ax += ride->excitement / 8;
+			_bx += ride->intensity / 8;
 		}
 		_ax = min(1000, _ax);
 		_bx = min(1000, _bx);
@@ -198,10 +198,10 @@ int calculate_park_rating()
 
 			if (ride->type == RIDE_TYPE_NULL)
 				continue;
-			if (ride->var_140 == -1)
+			if (ride->excitement == -1)
 				continue;
-			_ax += ride->var_140 / 8;
-			_bx += ride->var_142 / 8;
+			_ax += ride->excitement / 8;
+			_bx += ride->intensity / 8;
 			num_rides++;
 		}
 

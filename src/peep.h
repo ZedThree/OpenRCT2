@@ -37,16 +37,11 @@ enum STAFF_TYPE {
 	STAFF_TYPE_ENTERTAINER
 };
 
-enum {
-	PEEP_FLAGS_TRACKING = 8
-};
-
 enum PEEP_THOUGHT_TYPE {
 	PEEP_THOUGHT_TYPE_NONE = 255
 };
 
 enum PEEP_STATE {
-
 	PEEP_STATE_QUEUING_FRONT = 2,
 	PEEP_STATE_ON_RIDE = 3,
 	PEEP_STATE_LEAVING_RIDE = 4,
@@ -69,6 +64,32 @@ enum PEEP_STATE {
 	PEEP_STATE_WATERING = 21,
 	PEEP_STATE_HEADING_TO_INSPECTION = 22,
 	PEEP_STATE_INSPECTING = 23
+};
+
+enum PEEP_FLAGS {
+	PEEP_FLAGS_LEAVING_PARK = (1 << 0),
+	PEEP_FLAGS_SLOW_WALK = (1 << 1),
+
+	PEEP_FLAGS_TRACKING = (1 << 3),
+	PEEP_FLAGS_WAVING = (1 << 4), // Makes the peep wave
+
+	PEEP_FLAGS_PHOTO = (1 << 6), // Makes the peep take a picture
+	PEEP_FLAGS_PAINTING = (1 << 7), 
+
+	PEEP_FLAGS_LITTER = (1 << 9), // Makes the peep throw litter
+	PEEP_FLAGS_LOST = (1 << 10), // Makes the peep feel lost (animation trigerred)
+	PEEP_FLAGS_HUNGER = (1 << 11), // Makes the peep become hungry quicker
+	PEEP_FLAGS_BATHROOM = (1 << 12), // Makes the peep want to go to the bathroom
+	PEEP_FLAGS_CROWDED = (1 << 13), // The peep will start feeling crowded
+
+	PEEP_FLAGS_NAUSEA = (1 << 15), // Makes the peep feel sick (e.g. after an extreme ride)
+
+	PEEP_FLAGS_EATING = (1 << 17), // Reduces hunger
+	PEEP_FLAGS_EXPLODE = (1 << 18),
+
+	PEEP_FLAGS_JOY = (1 << 23), // Makes the peep jump in joy
+	PEEP_FLAGS_ANGRY = (1 << 24),
+	PEEP_FLAGS_ICE_CREAM = (1 << 25) // Unconfirmed
 };
 
 typedef struct {
@@ -118,11 +139,11 @@ typedef struct {
 	uint8 bathroom;					// 0x40
 	uint8 pad_041[0x27];
 	uint8 current_ride;				// 0x68
-	uint8 pad_6A;					// 0x6A Part of current_ride?
-	uint8 current_train;   	        // 0x6B
-	uint8 current_car;				// 0x6C
-	uint8 current_seat;				// 0x6D
-	uint8 pad_6E[0x0E];
+	uint8 pad_69;
+	uint8 current_train;   	        // 0x6A
+	uint8 current_car;				// 0x6B
+	uint8 current_seat;				// 0x6C
+	uint8 pad_6D[0x0F];
 	uint8 rides_been_on[32];		// 0x7C
 	uint32 id;						// 0x9C
 	sint32 cash_in_pocket;			// 0xA0
@@ -132,13 +153,13 @@ typedef struct {
 	uint16 pad_C4;
 	uint8 var_C6;
 	uint8 pad_C7;
-	uint32 var_C8;					// Bit 11 tracking, Bit 8 leaving the park
-	uint8 var_CC;					// Bit 0 mad, bit 1 Ice Cream
-	uint8 pad_CD[0x18];
-	uint16 paid_to_enter;			// 0xE5
-	uint16 paid_on_rides;			// 0xE7
-	uint16 paid_on_food;			// 0xE9
-	uint16 paid_on_souvenirs;		// 0xEB
+	uint32 flags;					// 0xC8
+	uint8 var_CC;					
+	uint8 pad_CD[0x17];
+	uint16 paid_to_enter;			// 0xE4
+	uint16 paid_on_rides;			// 0xE6
+	uint16 paid_on_food;			// 0xE8
+	uint16 paid_on_souvenirs;		// 0xEA
 	uint8 no_of_food;				// 0xEC
 	uint8 no_of_drinks;				// 0xED
 	uint8 no_of_souvenirs;			// 0xEE

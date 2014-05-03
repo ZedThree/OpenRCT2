@@ -44,6 +44,8 @@ typedef unsigned long long uint64;
 #define sgn(x)				((x > 0) ? 1 : ((x < 0) ? -1 : 0))
 #define clamp(l, x, h)		(min(h, max(l, x)))
 
+#define countof(x)			_countof(x)
+
 void rct2_finish();
 
 enum {
@@ -118,14 +120,6 @@ enum {
 	PATH_ID_CSS45,
 	PATH_ID_CSS46
 
-};
-
-enum {
-	GAME_FLAGS_PARK_OPEN = (1 << 0),
-	GAME_FLAGS_BELOW_TREE_HEIGHT_ONLY = (1 << 5),
-	GAME_FLAGS_NO_MONEY = (1 << 11),
-	GAME_FLAGS_PARK_FREE_ENTRY = (1 << 13),
-	GAME_FLAGS_18 = (1 << 18)
 };
 
 void rct2_endupdate();

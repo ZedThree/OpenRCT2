@@ -159,7 +159,7 @@ static void window_game_bottom_toolbar_mouseup()
 	switch (widgetIndex) {
 	case WIDX_LEFT_OUTSET:
 	case WIDX_MONEY:
-		if (!(RCT2_GLOBAL(RCT2_ADDRESS_GAME_FLAGS, uint32) & 0x800))
+		if (!(RCT2_GLOBAL(RCT2_ADDRESS_PARK_FLAGS, uint32) & 0x800))
 			RCT2_CALLPROC_EBPSAFE(0x0069DDF1);
 		break;
 	case WIDX_GUESTS:
@@ -223,7 +223,7 @@ static void window_game_bottom_toolbar_tooltip()
 	case WIDX_DATE:
 		month = RCT2_GLOBAL(RCT2_ADDRESS_CURRENT_MONTH_YEAR, sint16) & 7;
 		day = ((RCT2_GLOBAL(RCT2_ADDRESS_CURRENT_MONTH_TICKS, sint16) * days_in_month[month]) >> 16) & 0xFF;
-
+		 
 		*((short*)0x013CE952) = STR_DATE_DAY_1 + day;
 		*((short*)0x013CE954) = STR_MONTH_MARCH + month;
 		widgetIndex = 0;
@@ -302,7 +302,7 @@ static void window_game_bottom_toolbar_invalidate()
 	}
 
 	// Hide money if there is no money
-	if (RCT2_GLOBAL(RCT2_ADDRESS_GAME_FLAGS, uint32) & 0x800) {
+	if (RCT2_GLOBAL(RCT2_ADDRESS_PARK_FLAGS, uint32) & 0x800) {
 		window_game_bottom_toolbar_widgets[WIDX_MONEY].type = WWT_EMPTY;
 		window_game_bottom_toolbar_widgets[WIDX_GUESTS].top = 1;
 		window_game_bottom_toolbar_widgets[WIDX_GUESTS].bottom = 17;
