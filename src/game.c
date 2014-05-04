@@ -399,8 +399,8 @@ static void game_handle_input_mouse(int x, int y, int state)
 					RCT2_GLOBAL(0x009DE540, sint16) = 1000;
 					dx <<= viewport->zoom + 1;
 					dy <<= viewport->zoom + 1;
-					w->var_4B2 += dx;
-					w->var_4B4 += dy;
+					w->saved_view_x += dx;
+					w->saved_view_y += dy;
 				}
 			}
 		} else if (state == 4) {
@@ -795,11 +795,11 @@ void game_handle_edge_scroll()
 
 	// Scroll viewport
 	if (scrollX != 0) {
-		mainWindow->var_4B2 += scrollX * (12 << mainWindow->viewport->zoom);
+		mainWindow->saved_view_x += scrollX * (12 << mainWindow->viewport->zoom);
 		RCT2_GLOBAL(0x009DE518, uint32) |= (1 << 7);
 	}
 	if (scrollY != 0) {
-		mainWindow->var_4B4 += scrollY * (12 << mainWindow->viewport->zoom);
+		mainWindow->saved_view_y += scrollY * (12 << mainWindow->viewport->zoom);
 		RCT2_GLOBAL(0x009DE518, uint32) |= (1 << 7);
 	}
 }
@@ -836,11 +836,11 @@ void game_handle_key_scroll()
 
 	// Scroll viewport
 	if (scrollX != 0) {
-		mainWindow->var_4B2 += scrollX * (12 << mainWindow->viewport->zoom);
+		mainWindow->saved_view_x += scrollX * (12 << mainWindow->viewport->zoom);
 		RCT2_GLOBAL(0x009DE518, uint32) |= (1 << 7);
 	}
 	if (scrollY != 0) {
-		mainWindow->var_4B4 += scrollY * (12 << mainWindow->viewport->zoom);
+		mainWindow->saved_view_y += scrollY * (12 << mainWindow->viewport->zoom);
 		RCT2_GLOBAL(0x009DE518, uint32) |= (1 << 7);
 	}
 }
@@ -874,6 +874,9 @@ void handle_shortcut(int key)
 			RCT2_CALLPROC_EBPSAFE(RCT2_ADDRESS(0x006E3FB4, uint32)[i]);
 			break;
 		}
+	}
+	if (key == SDL_SCANCODE_M) {
+		key = key;
 	}
 }
 
@@ -930,7 +933,7 @@ void game_handle_keyboard_input()
 
 	// Handle key input
 	while ((key = get_next_key()) != 0) {
-		if (key == 255 || key == 0x10 || key == 0x11)
+		if (key == 255)
 			continue;
 
 		key |= RCT2_GLOBAL(RCT2_ADDRESS_PLACE_OBJECT_MODIFIER, uint8) << 8;
