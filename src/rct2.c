@@ -122,7 +122,7 @@ void rct2_init()
 	RCT2_CALLPROC_EBPSAFE(0x006BA8E0); // init_audio();
 	viewport_init_all();
 	news_item_init_queue();
-	RCT2_CALLPROC_EBPSAFE(0x006C45E7); // get local time
+	get_local_time();
 	RCT2_CALLPROC_EBPSAFE(0x00667104);
 	RCT2_CALLPROC_EBPSAFE(0x006C4209);
 	RCT2_CALLPROC_EBPSAFE(0x0069EB13);
@@ -142,8 +142,7 @@ void rct2_init()
 	title_load();
 
 	gfx_clear(RCT2_ADDRESS(RCT2_ADDRESS_SCREEN_DPI, rct_drawpixelinfo), 10);
-	// RCT2_GLOBAL(RCT2_ADDRESS_RUN_INTRO_TICK_PART, int) = 8;
-	RCT2_GLOBAL(RCT2_ADDRESS_RUN_INTRO_TICK_PART, int) = 0;
+	RCT2_GLOBAL(RCT2_ADDRESS_RUN_INTRO_TICK_PART, int) = gConfig.play_intro ? 8 : 0;
 }
 
 // rct2: 0x00683499
@@ -235,7 +234,7 @@ void check_cmdline_arg()
 	if(!stricmp(processed_arg + last_period, "sv6"))
 	{
 		strcpy(0x00141EF68, processed_arg);
-		RCT2_CALLPROC_EBPSAFE(0x00675E1B); //load_saved_game
+		game_load_save();
 	}
 	else if(!stricmp(processed_arg + last_period, "sc6"))
 	{
@@ -374,6 +373,19 @@ void get_system_time()
 	RCT2_GLOBAL(RCT2_ADDRESS_OS_TIME_MONTH, sint16) = systime.wMonth;
 	RCT2_GLOBAL(RCT2_ADDRESS_OS_TIME_YEAR, sint16) = systime.wYear;
 	RCT2_GLOBAL(RCT2_ADDRESS_OS_TIME_DAYOFWEEK, sint16) = systime.wDayOfWeek;
+}
+
+/**
+ * Obtains os local time (hour and minute)
+ *  rct2: 0x006C45E7;
+ */
+void get_local_time()
+{
+	SYSTEMTIME systime;
+	GetLocalTime(&systime);
+
+	RCT2_GLOBAL(RCT2_ADDRESS_OS_TIME_HOUR, sint16) = systime.wHour;
+	RCT2_GLOBAL(RCT2_ADDRESS_OS_TIME_MINUTE, sint16) = systime.wMinute;
 }
 
 /**
