@@ -1180,3 +1180,51 @@ void tool_cancel()
 		}
 	}
 }
+
+/**
+*
+*  rct2: 0x0068F083
+*/
+void window_guest_list_init_vars_a() {
+	RCT2_GLOBAL(0x013B0E6C, uint32) = 1;
+	RCT2_GLOBAL(0x00F1AF1C, uint32) = 0xFFFFFFFF;
+	RCT2_GLOBAL(0x00F1EE02, uint32) = 0xFFFFFFFF;
+	RCT2_GLOBAL(RCT2_ADDRESS_WINDOW_GUEST_LIST_SELECTED_FILTER, uint8) = 0xFF;
+}
+
+/**
+*
+*  rct2: 0x0068F050
+*/
+void window_guest_list_init_vars_b() {
+	RCT2_GLOBAL(RCT2_ADDRESS_WINDOW_GUEST_LIST_SELECTED_TAB, uint8) = 0;
+	RCT2_GLOBAL(RCT2_ADDRESS_WINDOW_GUEST_LIST_SELECTED_VIEW, uint8) = 0;
+	RCT2_GLOBAL(0x00F1AF1C, uint32) = 0xFFFFFFFF;
+	RCT2_GLOBAL(0x00F1EE02, uint32) = 0xFFFFFFFF;
+	RCT2_GLOBAL(RCT2_ADDRESS_WINDOW_GUEST_LIST_SELECTED_FILTER, uint8) = 0xFF;
+	RCT2_GLOBAL(0x00F1AF20, uint16) = 0;
+}
+
+/**
+*
+*  rct2: 0x006ACA58
+*/
+void window_ride_list_init_vars() {
+	// If we are in the track designer, default to the Roller Coaster tab
+	if (RCT2_GLOBAL(RCT2_ADDRESS_SCREEN_FLAGS, uint8) & SCREEN_FLAGS_TRACK_DESIGNER) {
+		RCT2_GLOBAL(RCT2_ADDRESS_WINDOW_RIDE_LIST_SELECTED_TAB, uint8) = WINDOW_RIDE_LIST_TAB_ROLLER_COASTER;
+	}
+	else {
+		RCT2_GLOBAL(RCT2_ADDRESS_WINDOW_RIDE_LIST_SELECTED_TAB, uint8) = WINDOW_RIDE_LIST_TAB_TRANSPORT;
+	}
+
+	for (short i = 0; i < 6; i++) {
+		/*
+			Reset what is highlighted in each tab.
+			Each 16bit number represents the item in its respective tab.
+		*/
+		RCT2_ADDRESS(RCT2_ADDRESS_WINDOW_RIDE_LIST_HIGHLIGHTED_ITEM, uint16)[i] = 0xFFFF;
+	}
+
+	RCT2_GLOBAL(RCT2_ADDRESS_WINDOW_RIDE_LIST_INFORMATION_TYPE, uint8) = 0;
+}

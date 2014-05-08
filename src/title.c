@@ -34,6 +34,7 @@
 #include "scenario.h"
 #include "strings.h"
 #include "viewport.h"
+#include "editor.h"
 
 static const int gOldMusic = 0;
 static const int gRandomShowcase = 0;
@@ -91,20 +92,20 @@ void title_load()
 
 	RCT2_GLOBAL(RCT2_ADDRESS_SCREEN_FLAGS, uint8) = SCREEN_FLAGS_TITLE_DEMO;
 
-	RCT2_CALLPROC_EBPSAFE(0x00667104);
-	RCT2_CALLPROC_EBPSAFE(0x006C4209);
+	reset_park_entrances();
+	reset_saved_strings();
 	RCT2_CALLPROC_EBPSAFE(0x0069EB13);
 	ride_init_all();
-	RCT2_CALLPROC_EBPSAFE(0x0068F083); // window_guest_list_init_vars_a
+	window_guest_list_init_vars_a();
 	RCT2_CALLPROC_EBPSAFE(0x006BD3A4);
 	map_init();
 	park_init();
 	date_reset();
 	RCT2_CALLPROC_X(0x006C45ED, 0, 0, 0, 0, 0, 0, 0);
 	RCT2_CALLPROC_EBPSAFE(0x006DFEE4);
-	RCT2_CALLPROC_EBPSAFE(0x006ACA58);
-	RCT2_CALLPROC_EBPSAFE(0x0068F050); // window_guest_list_init_vars_b
-	RCT2_CALLPROC_EBPSAFE(0x006BD39C);
+	window_ride_list_init_vars();
+	window_guest_list_init_vars_b();
+	RCT2_GLOBAL(RCT2_ADDRESS_WINDOW_STAFF_LIST_SELECTED_TAB, uint8) = WINDOW_STAFF_LIST_TAB_HANDYMEN;
 	RCT2_CALLPROC_EBPSAFE(0x0068AFFD);
 	RCT2_CALLPROC_EBPSAFE(0x0069EBE4);
 	viewport_init_all();
@@ -190,7 +191,7 @@ static void title_update_showcase()
 
 				window_invalidate(w);
 				RCT2_CALLPROC_EBPSAFE(0x0069E9A7);
-				RCT2_CALLPROC_EBPSAFE(0x006ACA58);
+				window_ride_list_init_vars();
 				RCT2_CALLPROC_EBPSAFE(0x00684AC3);
 				RCT2_CALLPROC_EBPSAFE(0x006DFEE4);
 				news_item_init_queue();
