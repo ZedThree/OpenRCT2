@@ -284,22 +284,6 @@ enum {
 	WC_CHEATS = 110,
 } WINDOW_CLASS;
 
-enum {
-	WINDOW_RIDE_LIST_TAB_TRANSPORT,
-	WINDOW_RIDE_LIST_TAB_GENTLE,
-	WINDOW_RIDE_LIST_TAB_ROLLER_COASTER,
-	WINDOW_RIDE_LIST_TAB_THRILL,
-	WINDOW_RIDE_LIST_TAB_WATER,
-	WINDOW_RIDE_LIST_TAB_SHOP,
-	WINDOW_RIDE_LIST_TAB_RESEARCH
-} WINDOW_RIDE_LIST_TAB;
-
-enum {
-	WINDOW_STAFF_LIST_TAB_HANDYMEN,
-	WINDOW_STAFF_LIST_TAB_MECHANICS,
-	WINDOW_STAFF_LIST_TAB_SECURITY,
-	WINDOW_STAFF_LIST_TAB_ENTERTAINERS
-} WINDOW_STAFF_LIST_TAB;
 
 void window_dispatch_update_all();
 void window_update_all();
@@ -359,13 +343,19 @@ void window_clear_scenery_open();
 void window_land_open();
 void window_water_open();
 void window_guest_list_open();
+void window_park_awards_open();
 void window_park_entrance_open();
+void window_park_guests_open();
 void window_park_objective_open();
+void window_park_rating_open();
 void window_ride_list_open();
 void window_cheats_open();
 
 void window_guest_list_init_vars_a();
 void window_guest_list_init_vars_b();
-void window_ride_list_init_vars();
+
+void window_ride_construction_init_vars();
+
+void window_staff_init_vars();
 
 #endif
